@@ -4,11 +4,10 @@
 
 <h1>Welcome Dr. <%=@doctor.username%>.</h1><br>
 <h4>Please see below a list of your patients.</h4><br>
-
-  <% @doctor.patients.each do |patient| %>
-    <ul>
-      <li><a href="/doctors/<%=@doctor.slug%>/<%=@doctor.patients.id%>"><%=patient.last_name%>, <%=patient.first_name%></a></li>
-    </ul>
+  <ul>
+    <% @doctor.patients.each do |patient| %>
+      <li><%=patient.last_name%>, <%=patient.first_name%></li>
     <% end %>
+  </ul>
 <br><br>
 <a href="/doctors/new"><button>Add Patient</button></a>

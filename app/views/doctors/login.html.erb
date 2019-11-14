@@ -1,5 +1,9 @@
 <h1>Log In Below As A Doctor:</h1><br>
 
+<% if flash.has?(:message) %>
+  <%= flash[:message] %> <a href="/doctors/signup">Sign Up As Doctor Here</a>
+<% end %>
+<br><br>
 <form method="POST" action="/doctors/login">
   Username: <input type="text" name="username" >
   Password: <input type="password" name="password">

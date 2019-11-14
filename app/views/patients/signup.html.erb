@@ -1,4 +1,8 @@
-<h1>Sign Up Below As A Patient:</h1><br>
+<% if flash.has?(:message) %>
+  <%= flash[:message] %>
+<% end %>
+
+<h2>Sign Up Below As A Patient:</h2><br>
 
 <form action="/patients/signup" method="POST">
   <p>First Name: <input type="text" name="first_name"></p><br>

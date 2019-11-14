@@ -1,10 +1,10 @@
 class PatientsController < ApplicationController
-
   # POST: /patients
   get "/patients" do
     if !logged_in?
       redirect to "/"
     end
+    binding.pry
     erb :"/patients/index.html"
   end
 
@@ -19,11 +19,8 @@ class PatientsController < ApplicationController
 
   # POST: /doctors/signup
   post "/patients/signup" do
-    if logged_in?
-      redirect to "/patients"
-    end
-
-    if params[:username] == "" || params[:password] == "" || params[:email] == ""
+    if params[:username] == "" || params[:password] == "" || params[:email] == "" || params[:last_name] == "" || params[:first_name] == "" || params[:owner_id] == ""
+      flash[:message] = "**All fields must be filled in!**"
       redirect to "/patients/signup"
     else
       patient = Patient.create(first_name: params[:first_name], last_name: params[:last_name],:username => params[:username], :password => params[:password], :email => params[:email], doctor_id: params[:doctor_id])
@@ -31,10 +28,8 @@ class PatientsController < ApplicationController
       session[:username] = patient.username
       @name = params[:username]
       session[:message] = "Successfully signed up and logged in as #{@name}!"
-          binding.pry
       redirect to "/patients/index"
     end
-    redirect "patients/login.html"
   end
 
   get "/patients/index" do
@@ -48,17 +43,22 @@ class PatientsController < ApplicationController
   # GET: /doctors/login
   get "/patients/login" do
     @message = session.delete(:message)
+    if logged_in?
+      redirect to "/doctors"
+    end
     erb :"/patients/login.html"
   end
 
-  # POST: /doctors/signup
-  post "/patients/signup" do
-    redirect "/patients/index.html"
-  end
-
-  # GET: /patients
-  get "/patients" do
-    erb :"/patients/index.html"
+  post "/patients/login" do
+    @patient = Patient.find_by(username: params[:username])
+    if @patient && @patient.authenticate(params[:password])
+      session[:user_id] = @patient.id
+      session[:username] = @patient.username
+      redirect to "/patients"
+    else
+      flash[:message] = "**We can't find that username and password!**"
+      redirect to "/patients/login"
+    end
   end
 
   # GET: /patients/new

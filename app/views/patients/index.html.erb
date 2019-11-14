@@ -10,10 +10,10 @@
     <br><br>
 
   <h3><u>Medications</u></h3>
-  <% @patient.meds.each do |med| %>
-    <ul>
-      <li><a href="/patients/<%=@patient.slug%>/<%=@patient.meds.id%>">Name:<%=med.name%>, Dosage(mg):<%=med.dosage%></a></li>
-    </ul>
+  <ul>
+    <% @patient.meds.each do |med| %>
+      <li>Name:<%=med.name%>, Dosage(mg):<%=med.dosage%></li>
     <% end %>
+  </ul>
 <br><br>
 <a href="/patients/new"><button>Add Medications</button></a>

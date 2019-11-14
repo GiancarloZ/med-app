@@ -5,6 +5,7 @@ class DoctorsController < ApplicationController
     if !logged_in?
       redirect to "/"
     end
+    @doctor = Doctor.find_by(username: session[:username])
     erb :"/doctors/index.html"
   end
 
@@ -18,43 +19,64 @@ class DoctorsController < ApplicationController
 
   # POST: /doctors/signup
   post "/doctors/signup" do
-    if logged_in?
-      redirect to "/doctors"
-    end
-
-    if params[:username] == "" || params[:password] == "" || params[:email] == ""
+    if params[:username] == "" || params[:password] == "" || params[:email] == "" || params[:last_name] == "" || params[:first_name] == ""
+      flash[:message] = "**All fields must be filled in!**"
       redirect to "/doctors/signup"
     else
-      doctor = Doctor.create(first_name: params[:first_name], last_name: params[:last_name],:username => params[:username], :password => params[:password], :email => params[:email])
-      session[:user_id] = doctor.id
-      session[:username] = doctor.username
+      @doctor = Doctor.create(first_name: params[:first_name], last_name: params[:last_name],:username => params[:username], :password => params[:password], :email => params[:email])
+      session[:user_id] = @doctor.id
+      session[:username] = @doctor.username
       @name = params[:username]
       session[:message] = "Successfully signed up and logged in as #{@name}!"
       redirect to "/doctors/index"
     end
-    redirect "/doctors/login.html"
   end
 
   get "/doctors/index" do
+    @doctor = current_user_doctor
     @message = session.delete(:message)
     @patients = Patient.all
-    @doctor = current_user_doctor
     erb :"/doctors/index.html"
   end
 
   # GET: /doctors/login
   get "/doctors/login" do
+    if logged_in?
+      redirect to "/doctors"
+    end
     erb :"/doctors/login.html"
   end
 
-  # POST: /doctors/signup
-  post "/doctors/signup" do
-    redirect "/doctors/index.html"
+  post "/doctors/login" do
+    @doctor = Doctor.find_by(username: params[:username])
+    if @doctor && @doctor.authenticate(params[:password])
+      session[:user_id] = @doctor.id
+      session[:username] = @doctor.username
+      redirect to "/doctors"
+    else
+      flash[:message] = "**We can't find that username and password!**"
+      redirect to "/doctors/login"
+    end
   end
 
   # GET: /doctors/new
   get "/doctors/new" do
+    if !logged_in?
+      redirect to "/"
+    end
     erb :"/doctors/new.html"
+  end
+
+  post "/doctors/new" do
+  @doctor = current_user_doctor
+    if params[:email] == "" || params[:last_name] == "" || params[:first_name] == ""
+      flash[:message] = "**All fields must be filled in!**"
+      redirect to "/doctors/new"
+    else
+      @patient = Patient.create(first_name: params[:first_name], last_name: params[:last_name], :email => params[:email], username: "#{params[:last_name]}#{params[:first_name]}", password: "password", doctor_id: @doctor.id)
+      flash[:message] = "Successfully added patient #{@patient.last_name}, #{@patient.first_name}!"
+      redirect to "/doctors/index"
+    end
   end
 
   # GET: /doctors/5
