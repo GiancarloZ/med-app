@@ -2,12 +2,10 @@ class DoctorsController < ApplicationController
 
   # GET: /doctors
   get "/doctors" do
+    if !logged_in?
+      redirect to "/"
+    end
     erb :"/doctors/index.html"
-  end
-
-  # POST: /doctors
-  post "/doctors" do
-    redirect "/doctors"
   end
 
   # GET: /doctors/signup
@@ -31,7 +29,7 @@ class DoctorsController < ApplicationController
       session[:user_id] = doctor.id
       session[:username] = doctor.username
       @name = params[:username]
-      session[:message] = "Successfully created signed up and logged in as #{@name}!"
+      session[:message] = "Successfully signed up and logged in as #{@name}!"
       redirect to "/doctors/index"
     end
     redirect "/doctors/login.html"

@@ -2,7 +2,7 @@
   <p><%= @message %></p>
 <% end %>
 
-<h1>Welcome Dr. <%=@doctor.last_name%>.</h1><br>
+<h1>Welcome Dr. <%=@doctor.username%>.</h1><br>
 <h4>Please see below a list of your patients.</h4><br>
 
   <% @doctor.patients.each do |patient| %>

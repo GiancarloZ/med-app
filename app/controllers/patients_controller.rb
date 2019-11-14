@@ -1,10 +1,19 @@
 class PatientsController < ApplicationController
 
+  # POST: /patients
+  get "/patients" do
+    if !logged_in?
+      redirect to "/"
+    end
+    erb :"/patients/index.html"
+  end
+
   # GET: /doctors/signup
   get "/patients/signup" do
     if logged_in? && Patient.find_by(username: session[:username])
-      redirect to "/doctors"
+      redirect to "/patients"
     end
+    @doctors = Doctor.all
     erb :"/patients/signup.html"
   end
 
@@ -15,16 +24,25 @@ class PatientsController < ApplicationController
     end
 
     if params[:username] == "" || params[:password] == "" || params[:email] == ""
-      redirect to "/doctors/signup"
+      redirect to "/patients/signup"
     else
-      patient = Patient.create(first_name: params[:first_name], last_name: params[:last_name],:username => params[:username], :password => params[:password], :email => params[:email])
+      patient = Patient.create(first_name: params[:first_name], last_name: params[:last_name],:username => params[:username], :password => params[:password], :email => params[:email], doctor_id: params[:doctor_id])
       session[:user_id] = patient.id
       session[:username] = patient.username
       @name = params[:username]
-      session[:message] = "Successfully created signed up and logged in as #{@name}!"
+      session[:message] = "Successfully signed up and logged in as #{@name}!"
+          binding.pry
       redirect to "/patients/index"
     end
     redirect "patients/login.html"
+  end
+
+  get "/patients/index" do
+    @message = session.delete(:message)
+    @meds = Med.all
+    @patient = current_user_patient
+    @doctor = @patient.doctor
+    erb :"/patients/index.html"
   end
 
   # GET: /doctors/login
@@ -46,11 +64,6 @@ class PatientsController < ApplicationController
   # GET: /patients/new
   get "/patients/new" do
     erb :"/patients/new.html"
-  end
-
-  # POST: /patients
-  post "/patients" do
-    redirect "/patients"
   end
 
   # GET: /patients/username/5
