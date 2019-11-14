@@ -1,13 +1,47 @@
 class DoctorsController < ApplicationController
 
+  # GET: /doctors
+  get "/doctors" do
+    erb :"/doctors/index.html"
+  end
+
+  # POST: /doctors
+  post "/doctors" do
+    redirect "/doctors"
+  end
+
   # GET: /doctors/signup
   get "/doctors/signup" do
+    if logged_in? && Doctor.find_by(username: session[:username])
+      redirect to "/doctors"
+    end
     erb :"/doctors/signup.html"
   end
 
   # POST: /doctors/signup
   post "/doctors/signup" do
+    if logged_in?
+      redirect to "/doctors"
+    end
+
+    if params[:username] == "" || params[:password] == "" || params[:email] == ""
+      redirect to "/doctors/signup"
+    else
+      doctor = Doctor.create(first_name: params[:first_name], last_name: params[:last_name],:username => params[:username], :password => params[:password], :email => params[:email])
+      session[:user_id] = doctor.id
+      session[:username] = doctor.username
+      @name = params[:username]
+      session[:message] = "Successfully created signed up and logged in as #{@name}!"
+      redirect to "/doctors/index"
+    end
     redirect "/doctors/login.html"
+  end
+
+  get "/doctors/index" do
+    @message = session.delete(:message)
+    @patients = Patient.all
+    @doctor = current_user_doctor
+    erb :"/doctors/index.html"
   end
 
   # GET: /doctors/login
@@ -25,38 +59,25 @@ class DoctorsController < ApplicationController
     erb :"/doctors/new.html"
   end
 
-  # POST: /doctors
-  post "/doctors" do
-    redirect "/doctors"
-  end
-
   # GET: /doctors/5
-  get "/doctors/:id" do
+  get "/doctors/:slug" do
     erb :"/doctors/show.html"
   end
 
-  # GET: /doctors/5/edit
-  get "/doctors/:id/edit" do
+  # GET: /doctors/username/edit
+  get "/doctors/:slug/:id/edit" do
     erb :"/doctors/edit.html"
   end
 
-  # PATCH: /doctors/5
-  patch "/doctors/:id" do
+  # PATCH: /doctors/username
+  patch "/doctors/:slug/:id" do
     redirect "/doctors/:id"
   end
 
-  # DELETE: /doctors/5/delete
-  delete "/doctors/:id/delete" do
+  # DELETE: /doctors/username/delete
+  delete "/doctors/:slug/:id/delete" do
     redirect "/doctors"
   end
 
-  helpers do
-    def logged_in?
-      !!session[:user_id]
-    end
 
-    def current_user
-      Doctor.find(session[:user_id])
-    end
-  end
 end
