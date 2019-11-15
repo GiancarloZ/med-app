@@ -1,5 +1,5 @@
-<% if @message %>
-  <p><%= @message %></p>
+<% if !!flash[:update] %>
+  <p><%= flash[:update] %></p>
 <% end %>
 
 <h1>Welcome <%=@patient.username%>.</h1><br>
@@ -18,3 +18,4 @@
 <br><br>
 
 <a href="/patients/<%=@patient.id%>/edit">Account Settings</a>
+  

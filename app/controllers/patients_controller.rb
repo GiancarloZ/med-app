@@ -5,7 +5,7 @@ class PatientsController < ApplicationController
       redirect to "/"
     end
     @patient = Patient.find_by(username: session[:username])
-    erb :"/patients/index.html"
+    redirect to :"/patients/index"
   end
 
   # GET: /doctors/signup
@@ -71,15 +71,31 @@ class PatientsController < ApplicationController
     erb :"/patients/edit.html"
   end
 
-  # PATCH: /patients/username/5
+  # PATCH: /patients/username/5, editing patient user account
   patch "/patients/:id" do
+    @patient = current_user_patient
+    if params[:first_name] == ""
+      params[:first_name] = @patient.first_name
+    end
 
-    redirect "/patients/:id"
+    if params[:last_name] == ""
+      params[:last_name] = @patient.last_name
+    end
+
+    if params[:email] == ""
+      params[:email] = @patient.email
+    end
+
+    @patient.update(first_name: params[:first_name], last_name: params[:last_name], email: params[:email])
+    flash[:update] = "**You've successfully updated your account information!**"
+    redirect "/patients/index"
   end
 
   # DELETE: /patients/5/delete
-  delete "/patients/:slug/:id/delete" do
-    redirect "/patients"
+  delete "/patients/:id/delete" do
+    @patient = Patient.find(params[:id])
+    @patient.delete
+    redirect "/logout"
   end
 
 
