@@ -88,6 +88,9 @@ class DoctorsController < ApplicationController
 
   # GET: /doctors/username/edit
   get "/doctors/:slug/:id/edit" do
+    @doctor = current_user_doctor
+    @patient = Patient.find(params[:id])
+    @meds = Med.all
     erb :"/doctors/edit.html"
   end
 
