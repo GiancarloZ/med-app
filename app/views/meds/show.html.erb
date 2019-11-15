@@ -1,1 +1,11 @@
-<h1>This is the show page for an individual instance of your model.</h1>
+<h1>Medication #<%=@med.id%></h1>
+
+
+<b><u>Name: </b></u><%=@med.name%><br>
+<b><u>Dosage: </b></u><%=@med.dosage%>mg<br><br>
+
+  <form action="/meds/<%=@med.id%>/edit" method="GET">
+    <input type="submit" value="Edit Medication">
+  </form><br><br>
+
+  <a href="/meds">All Medications</a>

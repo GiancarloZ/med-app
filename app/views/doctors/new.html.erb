@@ -10,6 +10,11 @@
   <p>Last Name: <input type="text" name="last_name"></p><br>
   <p>Email: <input type="text" name="email"></p><br>
 
+  <p><u>Medications<ul></p>
+  <% Med.all.each do |m| %>
+        <input id="<%=m.name%>" type="checkbox" name="med" value="<%=m.id%>"<%='checked' if @patient.meds.map{|m| m.id}.include?(m.id)%>
+        <label for="<%=m.name%>"><%=m.name%>, <%=m.dosage%></label>
+      <% end %><br><br>
 
   <input type="submit" value="Create Patient">
  </form>

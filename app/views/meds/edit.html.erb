@@ -1,1 +1,22 @@
-<h1>Insert the form to edit an instance of your model here.</h1>
+<h2>Edit Medication Below.</h2><br>
+
+<% if flash.has?(:error) %>
+  <%= flash[:error] %>
+<% end %>
+<br>
+
+<h4>Medication #<%=@med.id%>:</h4>
+  <b>Name:</b> <%=@med.name%><br>
+  <b>Dosage:</b> <%=@med.dosage%>mg<br><br>
+
+<form action="/meds/<%=@med.id%>/edit" method="POST">
+  <p>Name: <input type="text" name="name" placeholder="<%=@med.name%>"></p>
+  <p>Dosage(mg): <input type="text" name="dosage" placeholder="<%=@med.dosage%>"></p><br><br>
+
+  <input type="submit" value="Update Medication">
+</form><br>
+
+<form method="POST" action="/doctors/<%=@med.id%>/delete">
+  <input id="hidden" type="hidden" name="_method" value="delete">
+  <input type="submit" value="Delete Medication">
+</form>
