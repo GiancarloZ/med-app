@@ -8,7 +8,7 @@
     <% @doctor.patients.each do |patient| %>
       <li>
         <a href="/doctors/<%=@doctor.slug%>/<%=patient.id%>"><%=patient.last_name%>, <%=patient.first_name%></a>
-      </li>
+      </li><br>
     <% end %>
   </ul>
 <br><br>

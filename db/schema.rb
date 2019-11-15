@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191113200214) do
+ActiveRecord::Schema.define(version: 20191115175640) do
 
   create_table "doctors", force: :cascade do |t|
     t.string "email"
@@ -22,8 +22,8 @@ ActiveRecord::Schema.define(version: 20191113200214) do
   end
 
   create_table "meds", force: :cascade do |t|
-    t.string  "name"
-    t.integer "dosage"
+    t.string "name"
+    t.float  "dosage"
   end
 
   create_table "patient_meds", force: :cascade do |t|

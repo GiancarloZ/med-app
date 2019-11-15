@@ -13,6 +13,15 @@
   <p>First Name: <input type="text" name="first_name" placeholder="<%=@patient.first_name%>"></p><br>
   <p>Last Name: <input type="text" name="last_name" placeholder="<%=@patient.last_name%>"></p><br>
   <p>Email: <input type="text" name="email" placeholder="<%=@patient.email%>"</p><br><br>
+
+  <p><u>Medications<ul></p>
+  <% Med.all.each do |m| %>
+        <input id="<%=m.name%>" type="checkbox" name="med" value="<%=m.id%>"<%='checked' if @patient.meds.map{|m| m.id}.include?(m.id)%>
+        <label for="<%=m.name%>"><%=m.name%></label>
+      <% end %><br><br>
+
+<a href="/meds/new">Add New Medication</a><br><br>
+
   <input type="submit" value="Update Patient">
  </form>
 

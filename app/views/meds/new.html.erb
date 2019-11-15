@@ -1,1 +1,13 @@
-<h1>Insert the form to create a new instance of your model.</h1>
+<h2>Add Medication Below.</h2><br>
+
+<% if flash.has?(:message) %>
+  <%= flash[:message] %>
+<% end %>
+<br>
+
+<form action="/meds" method="POST">
+  <p>Name: <input type="text" name="name"></p><br>
+  <p>Dosage(mg): <input type="text" name="dosage"></p><br>
+
+  <input type="submit" value="Add Medication">
+ </form>
