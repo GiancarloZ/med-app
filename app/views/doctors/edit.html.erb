@@ -10,6 +10,7 @@
   <b><%=@patient.email%></b><br><br>
 
 <form action="/doctors/<%=@doctor.slug%>/<%=@patient.id%>/edit" method="POST">
+  <input id="hidden" type="hidden" name="_method" value="patch">
   <p>First Name: <input type="text" name="first_name" placeholder="<%=@patient.first_name%>"></p><br>
   <p>Last Name: <input type="text" name="last_name" placeholder="<%=@patient.last_name%>"></p><br>
   <p>Email: <input type="text" name="email" placeholder="<%=@patient.email%>"</p><br><br>
@@ -26,6 +27,7 @@
 </form><br><br>
 
  <form method="POST" action="/doctors/<%=@doctor.slug%>/<%=@patient.id%>/delete">
+   <input id="hidden" type="hidden" name="_method" value="delete">
  <input type="submit" value="Delete Patient">
  </form>
  <br><br>

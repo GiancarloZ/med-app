@@ -10,6 +10,7 @@
   <b>Dosage:</b> <%=@med.dosage%>mg<br><br>
 
 <form action="/meds/<%=@med.id%>/edit" method="POST">
+  <input id="hidden" type="hidden" name="_method" value="patch">
   <p>Name: <input type="text" name="name" placeholder="<%=@med.name%>"></p>
   <p>Dosage(mg): <input type="text" name="dosage" placeholder="<%=@med.dosage%>"></p><br><br>
 

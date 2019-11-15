@@ -4,7 +4,7 @@ class PatientsController < ApplicationController
     if !logged_in?
       redirect to "/"
     end
-    binding.pry
+    @patient = Patient.find_by(username: session[:username])
     erb :"/patients/index.html"
   end
 
@@ -43,7 +43,11 @@ class PatientsController < ApplicationController
   # GET: /doctors/login
   get "/patients/login" do
     @message = session.delete(:message)
-    if logged_in?
+    if logged_in? && Patient.find_by(username: session[:username])
+      redirect to "/patients"
+    end
+
+    if logged_in? && Doctor.find_by(username: session[:username])
       redirect to "/doctors"
     end
     erb :"/patients/login.html"
@@ -61,23 +65,15 @@ class PatientsController < ApplicationController
     end
   end
 
-  # GET: /patients/new
-  get "/patients/new" do
-    erb :"/patients/new.html"
-  end
-
-  # GET: /patients/username/5
-  get "/patients/:slug/:id" do
-    erb :"/patients/show.html"
-  end
-
   # GET: /patients/username/5/edit
-  get "/patients/:slug/:id/edit" do
+  get "/patients/:id/edit" do
+    @patient = current_user_patient
     erb :"/patients/edit.html"
   end
 
   # PATCH: /patients/username/5
-  patch "/patients/:slug/:id" do
+  patch "/patients/:id" do
+
     redirect "/patients/:id"
   end
 

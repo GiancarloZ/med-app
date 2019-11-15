@@ -11,18 +11,20 @@
 <b>Username:</b> <%=@patient.username%><br>
 <b>Password: **************</b></br><br>
 
-<h4>Change Settings</h4>
-<form action="/patients/<%=@patient.id%>/edit" method="POST">
-  <p>First Name: <input type="text" name="first_name" placeholder="<%=@patient.first_name%>"></p><br>
-  <p>Last Name: <input type="text" name="last_name" placeholder="<%=@patient.last_name%>"></p><br>
-  <p>Email: <input type="text" name="email" placeholder="<%=@patient.email%>"</p><br>
-  <p>Username: <input type="text" name="username" placeholder="<%=@patient.username%>"></p><br>
+<h4>Change Settings</h4><br>
+<form action="/patients/<%=@patient.id%>" method="POST">
+  <input id="hidden" type="hidden" name="_method" value="patch">
+  <p>First Name: <input type="text" name="first_name" placeholder="<%=@patient.first_name%>"></p>
+  <p>Last Name: <input type="text" name="last_name" placeholder="<%=@patient.last_name%>"></p>
+  <p>Email: <input type="text" name="email" placeholder="<%=@patient.email%>"></p>
+  <p>Username: <input type="text" name="username" placeholder="<%=@patient.username%>"></p>
   <p>Password: <input type="password" name="password" placeholder="type new password"></p><br><br>
 
   <input type="submit" value="Update Account">
 </form><br><br>
 
  <form method="POST" action="/patients/<%=@patient.id%>/delete">
+   <input id="hidden" type="hidden" name="_method" value="delete">
  <input type="submit" value="Delete Account"><p>**cannot be undone**</p>
  </form>
  <br><br>
