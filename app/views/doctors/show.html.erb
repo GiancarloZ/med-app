@@ -1,8 +1,12 @@
+<% if !!flash[:notice] %>
+  <p><%= flash[:notice] %></p>
+<% end %>
+
 <h2>Patient #<%=@patient.id%>: <%=@patient.last_name%>, <%=@patient.first_name%></h2>
 
 <h3><u><b>Prescribed Medications:</u></b></h3>
   <ul>
-    <% @patient.meds.each do |p| %>
+    <% @patient.meds.uniq.map do |p| %>
       <li>
         <b><u>Name:</b></u> <%=p.name%>, <b><u>Dosage(mg):</b></u> <%=p.dosage%>
       </li>

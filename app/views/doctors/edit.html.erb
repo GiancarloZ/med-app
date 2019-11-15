@@ -9,7 +9,7 @@
   <b><%=@patient.last_name%>, <%=@patient.first_name%></b><br>
   <b><%=@patient.email%></b><br><br>
 
-<form action="/doctors/<%=@doctor.slug%>/<%=@patient.id%>/edit" method="POST">
+<form action="/doctors/<%=@doctor.slug%>/<%=@patient.id%>" method="POST">
   <input id="hidden" type="hidden" name="_method" value="patch">
   <p>First Name: <input type="text" name="first_name" placeholder="<%=@patient.first_name%>"></p><br>
   <p>Last Name: <input type="text" name="last_name" placeholder="<%=@patient.last_name%>"></p><br>
@@ -32,4 +32,3 @@
  </form>
  <br><br>
  <a href="/doctors">All Patients</a>
-<%=binding.pry%>
