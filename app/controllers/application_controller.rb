@@ -2,7 +2,7 @@ require './config/environment'
 require 'rack-flash'
 
 class ApplicationController < Sinatra::Base
-  use Rack::Flash
+  use Rack::Flash, :sweep => true
   configure do
     set :public_folder, 'public'
     set :views, 'app/views'
@@ -11,6 +11,11 @@ class ApplicationController < Sinatra::Base
   end
 
   get "/" do
+    if logged_in? && Doctor.find_by(username: session[:username])
+      redirect to "/doctors"
+    elsif logged_in? && Patient.find_by(username: session[:username])
+      redirect to "/patients"
+    end
     erb :welcome
   end
 

@@ -74,13 +74,15 @@ class DoctorsController < ApplicationController
       redirect to "/doctors/new"
     else
       @patient = Patient.create(first_name: params[:first_name], last_name: params[:last_name], :email => params[:email], username: "#{params[:last_name]}#{params[:first_name]}", password: "password", doctor_id: @doctor.id)
-      flash[:message] = "Successfully added patient #{@patient.last_name}, #{@patient.first_name}!"
+      flash[:notice] = "Successfully added patient #{@patient.last_name}, #{@patient.first_name}!"
       redirect to "/doctors/index"
     end
   end
 
-  # GET: /doctors/5
-  get "/doctors/:slug" do
+  get "/doctors/:slug/:id" do
+    @doctor = current_user_doctor
+    @patient = Patient.find(params[:id])
+    @meds = Med.all
     erb :"/doctors/show.html"
   end
 

@@ -1,1 +1,18 @@
-<h1>This is the show page for an individual instance of your model.</h1>
+  <h2>Patient #<%=@patient.id%>: <%=@patient.last_name%>, <%=@patient.first_name%></h2>
+
+  <h3><u><b>Prescribed Medications:</u></b></h3>
+    <ul>
+      <% @patient.patient_meds.each do |p| %>
+        <li><b><u>Name:</b></u> <%=p.name%>, <b><u>Dosage(mg):</b></u> <%=p.dosage%></li>
+      <%end%>
+    </ul>
+
+<form action="/doctors/<%=@doctor.slug%>/<%=@patient.id%>/edit" method="GET">
+  <input type="submit" value="Edit Patient">
+</form>
+
+<form method="POST" action="/doctors/<%=@doctor.slug%>/<%=@patient.id%>/delete">
+  <input type="submit" value="Delete Patient">
+</form>
+<br><br>
+<a href="/doctors">All Patients</a>
