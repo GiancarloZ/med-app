@@ -1,0 +1,30 @@
+<h2>Edit Account Information Below.</h2><br>
+
+<% if flash.has?(:error) %>
+  <%= flash[:error] %>
+<% end %>
+<br>
+
+<b>Doctor #</b> <%=@doctor.id%><br>
+<b>Name:</b> <%=@doctor.last_name%>, <%=@doctor.first_name%><br>
+<b>Email:</b> <%=@doctor.email%><br>
+<b>Username:</b> <%=@doctor.username%><br>
+<b>Password: **************</b></br><br>
+
+<h4>Change Settings</h4><br>
+<form action="/doctors/<%=@doctor.slug%>" method="POST">
+  <input id="hidden" type="hidden" name="_method" value="patch">
+  <p>First Name: <input type="text" name="first_name" placeholder="<%=@doctor.first_name%>"></p>
+  <p>Last Name: <input type="text" name="last_name" placeholder="<%=@doctor.last_name%>"></p>
+  <p>Email: <input type="text" name="email" placeholder="<%=@doctor.email%>"></p>
+  <br><br>
+
+  <input type="submit" value="Update Account">
+</form><br><br>
+
+ <form method="POST" action="/doctors/<%=@doctor.id%>/delete">
+   <input id="hidden" type="hidden" name="_method" value="delete">
+ <input type="submit" value="Delete Account"><p>**cannot be undone**</p>
+ </form>
+ <br><br>
+ <a href="/patients">Back to Homepage</a>

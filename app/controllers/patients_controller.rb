@@ -1,7 +1,7 @@
 class PatientsController < ApplicationController
   # POST: /patients
   get "/patients" do
-    if !logged_in?
+    if !logged_in? && Patient.find_by(id: session[:id], username: session[:username])
       redirect to "/"
     end
     @patient = Patient.find_by(username: session[:username])
@@ -10,7 +10,7 @@ class PatientsController < ApplicationController
 
   # GET: /doctors/signup
   get "/patients/signup" do
-    if logged_in? && Patient.find_by(username: session[:username])
+    if logged_in? && Patient.find_by(id: session[:id], username: session[:username])
       redirect to "/patients"
     end
     @doctors = Doctor.all
@@ -33,6 +33,9 @@ class PatientsController < ApplicationController
   end
 
   get "/patients/index" do
+    if !logged_in? && Patient.find_by(id: session[:id], username: session[:username])
+      redirect to "/"
+    end
     @message = session.delete(:message)
     @meds = Med.all
     @patient = current_user_patient
@@ -43,18 +46,18 @@ class PatientsController < ApplicationController
   # GET: /doctors/login
   get "/patients/login" do
     @message = session.delete(:message)
-    if logged_in? && Patient.find_by(username: session[:username])
+    if logged_in? && Patient.find_by(id: session[:id], username: session[:username])
       redirect to "/patients"
     end
 
-    if logged_in? && Doctor.find_by(username: session[:username])
+    if logged_in? && Doctor.find_by(id: session[:id], username: session[:username])
       redirect to "/doctors"
     end
     erb :"/patients/login.html"
   end
 
   post "/patients/login" do
-    @patient = Patient.find_by(username: params[:username])
+    @patient = Patient.find_by(id: session[:id], username: params[:username])
     if @patient && @patient.authenticate(params[:password])
       session[:user_id] = @patient.id
       session[:username] = @patient.username
@@ -67,6 +70,10 @@ class PatientsController < ApplicationController
 
   # GET: /patients/username/5/edit
   get "/patients/:id/edit" do
+    if !logged_in? && Patient.find_by(id: session[:id], username: session[:username])
+      redirect to "/"
+    end
+
     @patient = current_user_patient
     erb :"/patients/edit.html"
   end
