@@ -6,7 +6,7 @@
 
 <h3><u><b>Prescribed Medications:</u></b></h3>
   <ul>
-    <% @patient.meds.uniq.map do |p| %>
+    <% @patient.meds.each do |p| %>
       <li>
         <b><u>Name:</b></u> <%=p.name%>, <b><u>Dosage(mg):</b></u> <%=p.dosage%>
       </li>

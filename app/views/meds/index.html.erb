@@ -1,15 +1,15 @@
 <% if !!flash[:notice] %>
   <p><%= flash[:notice] %></p>
 <% end %>
-<%=binding.pry%>
 
 <h1><b><u>Medications</b></u></h1><br>
   <ul>
     <% @meds.each do |med| %>
       <li>
-        <u>Name:</u> <a href="/meds/<%=med.id%>"><%=med.name%>, <%=med.dosage%>mg</a>
+        Name: <a href="/meds/<%=med.id%>"><%=med.name%>, <%=med.dosage%>mg</a>
       </li><br>
     <% end %>
   </ul>
 <br><br>
-<a href="/meds/new"><button>Add New Medication</button></a>
+<a href="/meds/new"><button>Add New Medication</button></a><br><br>
+<a href="/doctors/index">Back to Patients</a>

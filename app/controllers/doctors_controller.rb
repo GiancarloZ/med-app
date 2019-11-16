@@ -97,7 +97,7 @@ class DoctorsController < ApplicationController
   # PATCH: /doctors/username
   patch "/doctors/:slug/:id" do
     @patient = Patient.find(params[:id])
-    @patient_med = PatientMed.all
+    @doctor = current_user_doctor
     if params[:first_name] == ""
       params[:first_name] = @patient.first_name
     end
@@ -111,10 +111,10 @@ class DoctorsController < ApplicationController
     end
 
     @patient.update(first_name: params[:first_name], last_name: params[:last_name], email: params[:email])
-    @patient.patient_meds.find_or_create_by(med: Med.find(params[:med]))
+    @patient.med_ids = params[:meds]
     @patient.save
     flash[:update] = "**You've successfully updated your account information!**"
-    redirect to "/doctors"
+    redirect to "/doctors/#{@doctor.slug}/#{@patient.id}"
   end
 
   # DELETE: /doctors/username/delete

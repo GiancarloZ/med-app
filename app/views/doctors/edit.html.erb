@@ -16,10 +16,14 @@
   <p>Email: <input type="text" name="email" placeholder="<%=@patient.email%>"</p><br><br>
 
   <p><u>Medications</u></p>
-  <% Med.all.each do |m| %>
-        <input id="<%=m.name%>" type="checkbox" name="med" value="<%=m.id%>"<%='checked' if @patient.meds.map{|m| m.id}.include?(m.id)%>
-        <label for="<%=m.name%>"><%=m.name%>, <%=m.dosage%>mg</label>
-      <%end%><br><br>
+  <ul>
+  <% Med.all.each do |med| %>
+      <li>
+        <input id="<%=med.name%>" type="checkbox" name="meds[]" value="<%=med.id%>"<%='checked' if @patient.meds.map{|m| m.id}.include?(med.id)%>
+        <label for="<%=med.name%>"><%=med.name%>, <%=med.dosage%>mg</label>
+      </li><br>
+      <%end%>
+  </ul><br><br>
 
 <a href="/meds/new">Add New Medication</a><br><br>
 
