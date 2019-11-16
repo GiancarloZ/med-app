@@ -25,7 +25,7 @@ class MedsController < ApplicationController
       redirect to "/meds/new"
     else
       @med = Med.create(name: params[:name], dosage: params[:dosage])
-      flash[:notice] = "Successfully added medication #{@med.name}, #{@med.dosage}(mg)!"
+      flash[:notice] = "**Successfully added medication #{@med.name}, #{@med.dosage}(mg)!**"
       redirect to "/meds"
     end
   end

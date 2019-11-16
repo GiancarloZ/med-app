@@ -3,18 +3,24 @@
 <% if flash.has?(:message) %>
   <%= flash[:message] %>
 <% end %>
-<br>
+<br><br>
 
 <form action="/doctors/new" method="POST">
   <p>First Name: <input type="text" name="first_name"></p><br>
   <p>Last Name: <input type="text" name="last_name"></p><br>
   <p>Email: <input type="text" name="email"></p><br>
 
-  <p><u>Medications<ul></p>
-  <% Med.all.each do |m| %>
-        <input id="<%=m.name%>" type="checkbox" name="med" value="<%=m.id%>"<%='checked' if @patient.meds.map{|m| m.id}.include?(m.id)%>
-        <label for="<%=m.name%>"><%=m.name%>, <%=m.dosage%></label>
-      <% end %><br><br>
+  <p><u>Medications</u></p>
+  <ul>
+    <% @meds.each do |med| %>
+        <li>
+          <input id="<%=med.name%>" type="checkbox" name="meds[]" value="<%=med.id%>"
+          <label for="<%=med.name%>"><%=med.name%>, <%=med.dosage%>mg</label>
+        </li><br>
+        <%end%>
+    </ul><br><br>
 
   <input type="submit" value="Create Patient">
  </form>
+<br><br>
+<a href="/doctors">Back</a>

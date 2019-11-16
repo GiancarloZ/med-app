@@ -25,13 +25,15 @@ class ApplicationController < Sinatra::Base
   end
 
   get "/accounts" do
-    if logged_in && Patient.find_by(id: session[:id], username: session[:username])
+    if logged_in? && Patient.find_by(id: session[:user_id], username: session[:username])
       redirect to "/patients/edit"
-    elsif logged_inn && Doctor..find_by(id: session[:id], username: session[:username])
+    elsif logged_in? && Doctor.find_by(id: session[:user_id], username: session[:username])
       redirect to "/doctors/account"
+    else
+      redirect to "/"
     end
-
   end
+
   helpers do
     def logged_in?
       !!session[:user_id] && !!session[:username]
