@@ -1,4 +1,6 @@
-<h2>Edit Patient Below.</h2><br>
+<a href="/doctors/<%=@doctor.slug%>/<%=@patient.id%>">Back</a>
+<br><br>
+<h2><u>Edit Patient Below.</u></h2><br>
 
 <% if flash.has?(:error) %>
   <%= flash[:error] %>
@@ -16,6 +18,7 @@
   <p>Email: <input type="text" name="email" placeholder="<%=@patient.email%>"</p><br><br>
 
   <p><u>Medications</u></p>
+  <a href="/meds/new">Add New Medication</a><br><br>
   <ul>
   <% Med.all.each do |med| %>
       <li>
@@ -23,16 +26,15 @@
         <label for="<%=med.name%>"><%=med.name%>, <%=med.dosage%>mg</label>
       </li><br>
       <%end%>
-  </ul><br><br>
+  </ul><br>
 
-<a href="/meds/new">Add New Medication</a><br><br>
 
   <input type="submit" value="Update Patient">
 </form><br><br>
 
  <form method="POST" action="/doctors/<%=@doctor.slug%>/<%=@patient.id%>/delete">
    <input id="hidden" type="hidden" name="_method" value="delete">
- <input type="submit" value="Delete Patient">
+ <input type="submit" value="Delete Patient"><p>**cannot be undone**</p>
  </form>
  <br><br>
  <a href="/doctors">All Patients</a>

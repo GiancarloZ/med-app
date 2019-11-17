@@ -20,7 +20,7 @@ class PatientsController < ApplicationController
 
   # POST: /doctors/signup
   post "/patients/signup" do
-    if params[:username] == "" || params[:password] == "" || params[:email] == "" || params[:last_name] == "" || params[:first_name] == "" || params[:owner_id] == ""
+    if params[:username] == "" || params[:password] == "" || params[:email] == "" || params[:last_name] == "" || params[:first_name] == "" || params[:doctor_id] == nil
       flash[:message] = "**All fields must be filled in!**"
       redirect to "/patients/signup"
     else

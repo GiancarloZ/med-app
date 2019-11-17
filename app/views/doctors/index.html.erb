@@ -2,7 +2,7 @@
   <p><%= flash[:notice] %></p>
 <% end %>
 
-<h1>Welcome Dr. <%=@doctor.username%>.</h1><br>
+<h1><u>Welcome Dr. <%=@doctor.username%>.</u></h1><br>
 <h4>Please see below a list of your patients.</h4><br>
   <ul>
     <% @doctor.patients.each do |patient| %>

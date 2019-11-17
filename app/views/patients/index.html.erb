@@ -2,11 +2,12 @@
   <p><%= flash[:update] %></p>
 <% end %>
 
-<h1>Welcome <%=@patient.username%>.</h1><br>
+<h1><u>Welcome, <%=@patient.username%>.</u></h1><br>
 <h4>Please see below for your doctor's information and a list of medications prescribed.</h4><br>
 
   <h3><u>Doctor's Info</u></h3>
-  <b>Name: </b><%=@patient.doctor.last_name%>, <%=@patient.doctor.first_name%>
+  <b>Name: </b><%=@patient.doctor.last_name%>, <%=@patient.doctor.first_name%><br>
+  <b>Email: </b><%=@patient.doctor.email%>
     <br><br>
 
   <h3><u>Medications</u></h3>
@@ -18,4 +19,3 @@
 <br><br>
 
 <a href="/patients/<%=@patient.id%>/edit">Account Settings</a>
-  

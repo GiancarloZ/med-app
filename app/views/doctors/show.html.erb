@@ -1,8 +1,10 @@
+<a href="/">Back</a>
+<br><br>
 <% if !!flash[:notice] %>
   <p><%= flash[:notice] %></p>
 <% end %>
 
-<h2>Patient #<%=@patient.id%>: <%=@patient.last_name%>, <%=@patient.first_name%></h2>
+<h2><u>Patient #<%=@patient.id%>: <%=@patient.last_name%>, <%=@patient.first_name%></u></h2>
 
 <h3><u><b>Prescribed Medications:</u></b></h3>
   <ul>

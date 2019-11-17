@@ -1,9 +1,9 @@
 <a href="/">Back</a>
 <br><br>
-<h1>Log In Below As A Patient:</h1><br>
+<h1><u>Log In Below As A Patient:</u></h1>
 
 <% if flash.has?(:message) %>
-  <%= flash[:message] %> <a href="/patients/signup">Sign Up As Patient Here</a>
+  <%= flash[:message] %>
 <% end %>
 <br><br>
 <form method="POST" action="/patients/login">
