@@ -1,7 +1,8 @@
 <% if flash.has?(:message) %>
   <%= flash[:message] %>
 <% end %>
-
+<a href="/">Back</a>
+<br><br>
 <h2>Sign Up Below As A Patient:</h2><br>
 
 <form action="/patients/signup" method="POST">

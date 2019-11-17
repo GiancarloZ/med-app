@@ -12,10 +12,10 @@ class DoctorsController < ApplicationController
 
   # GET: /doctors/signup
   get "/doctors/signup" do
-    if logged_in? && !!Doctor.find_by(id: session[:user_id], username: session[:username])
-      erb :"/doctors/signup.html"
-    else
+    if logged_in?
       redirect to "/"
+    else
+      erb :"/doctors/signup.html"
     end
   end
 
