@@ -182,9 +182,9 @@ class DoctorsController < ApplicationController
     redirect "/doctors/:slug"
   end
 
-  # DELETE: /doctor/5/delete
-  delete "/patients/:id/delete" do
-    @doctor = Doctor.find(params[:id])
+  # DELETE: /doctor/username/delete
+  delete "/doctors/:slug/delete" do
+    @doctor = current_user_doctor
     @doctor.delete
     redirect "/logout"
   end
