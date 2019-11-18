@@ -4,7 +4,7 @@ Welcome to your MED-APP! Sign up as a doctor and create you username and passwor
 
 ## Installation
 
-To use the app, make sure to clone this repo:
+To use the app:
 
     $ gem install med-app
 
