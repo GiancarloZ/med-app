@@ -1,12 +1,12 @@
 class PatientsController < ApplicationController
   # POST: /patients
   get "/patients" do
-    if logged_in? && !!Patient.find_by(id: session[:user_id], username: session[:username])
-      @patient = Patient.find_by(username: session[:username])
-      redirect to :"/patients/index"
-    else
-      redirect to "/"
-    end
+    redirect_if_doctor_not_logged_in
+    # if logged_in? && !!Patient.find_by(id: session[:user_id], username: session[:username])
+    redirect to :"/patients/index"
+    # else
+    #   redirect to "/"
+    # end
   end
 
   # GET: /doctors/signup

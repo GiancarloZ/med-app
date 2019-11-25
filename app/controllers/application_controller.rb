@@ -11,9 +11,9 @@ class ApplicationController < Sinatra::Base
   end
 
   get "/" do
-    if logged_in? && !!Doctor.find_by(username: session[:username])
+    if logged_in? && !!Doctor.find_by(id: session[:user_id], username: session[:username])
       redirect to "/doctors"
-    elsif logged_in? && !!Patient.find_by(username: session[:username])
+    elsif logged_in? && !!Patient.find_by(id: session[:user_id], username: session[:username])
       redirect to "/patients"
     end
     erb :welcome
@@ -47,6 +47,11 @@ class ApplicationController < Sinatra::Base
       Patient.find_by(id: session[:user_id], username: session[:username])
     end
 
+    def redirect_if_doctor_not_logged_in
+      if !logged_in? || !Patient.find_by(id: session[:user_id], username: session[:username])
+        redirect to "/"
+      end
+    end
   end
 
 end
